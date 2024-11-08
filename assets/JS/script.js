@@ -9,7 +9,7 @@ else the other buttons will give the alert based on the button clicked(i.e.gamet
     for(let button of buttons) {
         button.addEventListener("click",function() {
             if (this.getAttribute("data-type") === "submit") {
-                alert("You Clicked Submit!");
+                checkAnswer();
             } else {
                 let gameType = this.getAttribute("data-type");
                 runGame(gameType);
@@ -40,12 +40,42 @@ function runGame (gameType) {
     }
 }
 
+
+/**
+ * Checks the answer against the first element in the CalculateCorrectAnswer array
+ * (as answer is returned as an array) ([X,'addition] with X being the answer)
+ */
 function checkAnswer() {
 
+    let userAnswer = parseInt(document.getElementById('answer-box').value);
+    let caluclatedAnswer = CalculateCorrectAnswer();
+    let isCorrect = userAnswer === caluclatedAnswer[0];
+
+    if (isCorrect) {
+        alert ('Well done you got the correct answer :D')
+    } else {
+        alert (`Awww....you answered ${userAnswer} however the correct answer was ${caluclatedAnswer[0]}! `)
+    }
+
+    runGame(calculatedAnswer[1]);
 }
 
-function CalculateCorrectAnswer () { 
+/**
+ * gets the operator and the operand directly from the DOM and calculates
+ *  if it is the correct answer 
+ */
 
+function CalculateCorrectAnswer () { 
+    let operand1 = parseInt(document.getElementById('operand1').innerText);
+    let operand2 = parseInt(document.getElementById('operand2').innerText);
+    let operator = document.getElementById("operator").innerText;
+
+    if (operator === "+") {
+        return [operand1 + operand2, "addition"];
+    } else {
+        alert(`Unimplemented operator ${operator}`);
+        throw `Unimplemented operator ${operator}. Aborting!`;
+    }
 }
 
 function IncrementScore () {
