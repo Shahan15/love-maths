@@ -11,11 +11,13 @@ else the other buttons will give the alert based on the button clicked(i.e.gamet
             if (this.getAttribute("data-type") === "submit") {
                 alert("You Clicked Submit!");
             } else {
-                let gameType = this.getAttribute('data-type');
-                alert(`You Clicked ${gameType}`);
+                let gameType = this.getAttribute("data-type");
+                runGame(gameType);
             }
         })
     }
+
+    runGame("addition");
 })
 
 
@@ -24,11 +26,18 @@ else the other buttons will give the alert based on the button clicked(i.e.gamet
  * and after the users answer has been processed 
  */
 
-function runGame () {
+function runGame (gameType) {
 
     //creates two random numbers between 1 and 24. adds 1 to prevent 0 from being generated 
-    let num1 = Math.floor(Math.random() * 25+) 1
-    let num2 = Math.floor(Math.random() * 25+) 1
+    let num1 = Math.floor(Math.random() * 25) + 1;
+    let num2 = Math.floor(Math.random() * 25) + 1;
+
+    if(gameType==="addition"){ 
+        displayAdditionQuestion (num1, num2);
+    } else {
+        alert (`Unkown game type: ${gameType}`);
+        throw `Unknown game type: ${gameType}. Aborting!`;
+    }
 }
 
 function checkAnswer() {
@@ -47,14 +56,18 @@ function IncrementWrongAnswer () {
 
 }
 
-function AdditionQuestion () {
+function displayAdditionQuestion(operand1, operand2) {
 
+    document.getElementById('operand1').textContent = operand1;
+    document.getElementById('operand2').textContent = operand2;
+    document.getElementById('operator').textContent = "+";
+    
 }
 
 function SubtractQuestion () {
 
 }
 
-function MultiplyQuestio () {
+function MultiplyQuestion () {
 
 }
