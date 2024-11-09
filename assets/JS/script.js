@@ -14,11 +14,11 @@ else the other buttons will give the alert based on the button clicked(i.e.gamet
                 let gameType = this.getAttribute("data-type");
                 runGame(gameType);
             }
-        })
+        });
     }
 
     runGame("addition");
-})
+});
 
 
 /**
@@ -48,13 +48,15 @@ function runGame (gameType) {
 function checkAnswer() {
 
     let userAnswer = parseInt(document.getElementById('answer-box').value);
-    let caluclatedAnswer = CalculateCorrectAnswer();
-    let isCorrect = userAnswer === caluclatedAnswer[0];
+    let calculatedAnswer = CalculateCorrectAnswer();
+    let isCorrect = userAnswer === calculatedAnswer[0];
 
     if (isCorrect) {
         alert ('Well done you got the correct answer :D')
+        IncrementScore()
     } else {
         alert (`Awww....you answered ${userAnswer} however the correct answer was ${caluclatedAnswer[0]}! `)
+        IncrementWrongAnswer()
     }
 
     runGame(calculatedAnswer[1]);
@@ -73,17 +75,26 @@ function CalculateCorrectAnswer () {
     if (operator === "+") {
         return [operand1 + operand2, "addition"];
     } else {
-        alert(`Unimplemented operator ${operator}`);
+        alert(`Unimplemented operator ${operator} `);
         throw `Unimplemented operator ${operator}. Aborting!`;
     }
 }
 
-function IncrementScore () {
+/**
+ * Adds 1 to correct answers (score) if answer is correct
+ */
 
+function IncrementScore () {
+    let score = parseInt(document.getElementById('scores').innerHTML)
+    document.getElementById('scores').innerText = score + 1 
 }
 
+/**
+ * Adds 1 to incorrect answers (incorrect) if answer is incorrect
+ */
 function IncrementWrongAnswer () {
-
+    let incorrect = parseInt(document.getElementById('incorrect').innerHTML)
+    document.getElementById('incorrect').innerText = incorrect + 1 
 }
 
 function displayAdditionQuestion(operand1, operand2) {
