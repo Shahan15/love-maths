@@ -17,6 +17,12 @@ else the other buttons will give the alert based on the button clicked(i.e.gamet
         });
     }
 
+   document.getElementById('answer-box').addEventListener("keydown",function(event) {
+    if(event.key==="Enter") {
+        checkAnswer();
+    }
+   })
+
     runGame("addition");
 });
 
@@ -28,6 +34,9 @@ else the other buttons will give the alert based on the button clicked(i.e.gamet
 
 function runGame (gameType) {
 
+    document.getElementById('answer-box').value = "";
+    document.getElementById('answer-box').focus();
+    
     //creates two random numbers between 1 and 24. adds 1 to prevent 0 from being generated 
     let num1 = Math.floor(Math.random() * 25) + 1;
     let num2 = Math.floor(Math.random() * 25) + 1;
@@ -39,6 +48,7 @@ function runGame (gameType) {
     } else if (gameType==="subtract") {
         SubtractQuestion (num1, num2);
     } else if (gameType==="division") {
+        DivisionQuestion(num1, num2);
     } else {
         alert(`Unknown game type: ${gameType}`);
         throw `Unknown game type: ${gameType}. Aborting!`;
@@ -58,11 +68,11 @@ function checkAnswer() {
     let isCorrect = userAnswer === calculatedAnswer[0];
 
     if (isCorrect) {
-        alert ('Well done you got the correct answer :D')
-        IncrementScore()
+        alert ('Well done you got the correct answer :D');
+        IncrementScore();
     } else {
-        alert (`Awww....you answered ${userAnswer} however the correct answer was ${calculatedAnswer[0]}! `)
-        IncrementWrongAnswer()
+        alert (`Awww....you answered ${userAnswer} however the correct answer was ${calculatedAnswer[0]}! `);
+        IncrementWrongAnswer();
     }
 
     runGame(calculatedAnswer[1]);
@@ -81,9 +91,11 @@ function CalculateCorrectAnswer () {
     if (operator === "+") {
         return [operand1 + operand2, "addition"];
     } else if (operator === "x"){
-        return [operand1*operand2, "multiply"]
+        return [operand1*operand2, "multiply"];
     } else if (operator === "-"){
-        return [operand1-operand2, "subtract"]
+        return [operand1-operand2, "subtract"];
+    } else if (operator=== "/") {
+        return [operand1/operand2, "division"];
     }
     else {
         alert(`Unimplemented operator ${operator} `);
@@ -136,4 +148,12 @@ function MultiplyQuestion (operand1,operand2) {
     document.getElementById('operand1').textContent = operand1;
     document.getElementById('operand2').textContent = operand2;
     document.getElementById('operator').textContent = "x";
+}
+
+function DivisionQuestion (operand1, operand2) { 
+    operand1 = operand1 * operand2;
+    
+    document.getElementById('operand1').textContent = operand1 
+    document.getElementById('operand2').textContent = operand2
+    document.getElementById('operator').textContent = "/";
 }
