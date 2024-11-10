@@ -34,10 +34,16 @@ function runGame (gameType) {
 
     if(gameType==="addition"){ 
         displayAdditionQuestion (num1, num2);
+    } else if (gameType==="multiply") {
+        MultiplyQuestion (num1, num2);
+    } else if (gameType==="subtract") {
+        SubtractQuestion (num1, num2);
+    } else if (gameType==="division") {
     } else {
-        alert (`Unkown game type: ${gameType}`);
+        alert(`Unknown game type: ${gameType}`);
         throw `Unknown game type: ${gameType}. Aborting!`;
     }
+
 }
 
 
@@ -55,7 +61,7 @@ function checkAnswer() {
         alert ('Well done you got the correct answer :D')
         IncrementScore()
     } else {
-        alert (`Awww....you answered ${userAnswer} however the correct answer was ${caluclatedAnswer[0]}! `)
+        alert (`Awww....you answered ${userAnswer} however the correct answer was ${calculatedAnswer[0]}! `)
         IncrementWrongAnswer()
     }
 
@@ -74,7 +80,12 @@ function CalculateCorrectAnswer () {
 
     if (operator === "+") {
         return [operand1 + operand2, "addition"];
-    } else {
+    } else if (operator === "x"){
+        return [operand1*operand2, "multiply"]
+    } else if (operator === "-"){
+        return [operand1-operand2, "subtract"]
+    }
+    else {
         alert(`Unimplemented operator ${operator} `);
         throw `Unimplemented operator ${operator}. Aborting!`;
     }
@@ -97,6 +108,10 @@ function IncrementWrongAnswer () {
     document.getElementById('incorrect').innerText = incorrect + 1 
 }
 
+/**
+ * Displays the addition question
+ */
+
 function displayAdditionQuestion(operand1, operand2) {
 
     document.getElementById('operand1').textContent = operand1;
@@ -105,10 +120,20 @@ function displayAdditionQuestion(operand1, operand2) {
     
 }
 
-function SubtractQuestion () {
-
+/**
+ * Displays the subtraction question, makes sure there are no negative answers 
+ */
+function SubtractQuestion (operand1, operand2) {
+    document.getElementById('operand1').textContent = operand1 > operand2 ? operand1 : operand2;
+    document.getElementById('operand2').textContent = operand1 > operand2 ? operand2 : operand1;
+    document.getElementById('operator').textContent = "-";
 }
 
-function MultiplyQuestion () {
-
+/**
+ * Displays the multiplication question
+ */
+function MultiplyQuestion (operand1,operand2) {
+    document.getElementById('operand1').textContent = operand1;
+    document.getElementById('operand2').textContent = operand2;
+    document.getElementById('operator').textContent = "x";
 }
